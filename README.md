@@ -60,7 +60,7 @@ free to launch it it whichever region makes sense for you.
 You can delete your cluster using:
 
 ```
-gcloud dataproc clusters delete [cluster-name]
+gcloud dataproc clusters delete [cluster-name] --region us-central1
 ```
 
 ### Submitting a spark job to the cluster
