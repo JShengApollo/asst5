@@ -184,7 +184,7 @@ You can not store the matrix M in local memory, but you can store the vector r l
 
 Run the aforementioned iterative process in Spark for 100 iterations (assuming β = 0.8) and obtain the PageRank vector r. The matrix M can be large and should be processed as an RDD in your solution. Compute the top 5 node IDs with the highest PageRank scores.
 
-For a sanity check, we have provided a smaller dataset (`small.txt`). In that dataset, the top node has ID 53 with value approximately 0.0357312 after 100 iterations (you can use this value to help debug). We will be grading you on your results for full.txt. We give you a file pageRank.py to write your code in, with basic starter code that starts your Spark context and reads in the input text file as an RDD. You will also be reporting the total time it took your program to run.
+For a sanity check, we have provided a smaller dataset (`small.txt`). In that dataset, the top node has ID 53 with value approximately 0.0357312 after 100 iterations (you can use this value to help debug). **We will be grading you on your results for full.txt.** We give you a file pageRank.py to write your code in, with basic starter code that starts your Spark context and reads in the input text file as an RDD. You will also be reporting the total time it took your program to run.
 The starter code already wraps the code you will write with timing code (report this number in seconds).
 Our reference solution takes less than 10 seconds for 100 iterations on `full.txt` on Myth when run with the following command:
 
