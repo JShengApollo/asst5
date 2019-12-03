@@ -216,7 +216,7 @@ Points in this assignment will solely be based on the correctness of your implem
 - 50 points: correctness of Page Rank
 - 20 points: writeup for Page Rank
 
-In your writeup, please describe at a high level your implementation strategy. For PageRank, also compare at a high level the single-worker performance of Spark compared to your assignment 4 submission for the same graphs. Note the differences you see (which implementation is faster), and outline some plausible reasons why these differences might exist.
+In your writeup, please describe at a high level your implementation strategy. For PageRank, also compare at a high level the single-machine performance of Spark compared to your assignment 4 submission for the same graphs (on Myth). Please use all cores on the Myth machine. Note the differences you see (which implementation is faster), and outline some plausible reasons why these differences might exist.
 
 The graph available at `gs://cs149-asst5/page_rank/webgraph` is for a bonus 20 points. Please indicate in your writeup how you modified your PageRank implementation to account for this large a graph.
 
