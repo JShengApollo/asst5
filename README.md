@@ -63,7 +63,7 @@ You can delete your cluster using:
 gcloud dataproc clusters delete [cluster-name] --region us-central1
 ```
 
-### Submitting a spark job to the cluster
+### Submitting a Spark job to the cluster
 Submitting a Spark job is easy :) We don't even need to SSH into the master;
 we can just use gcloud's CLI!
 
@@ -161,18 +161,18 @@ For `pg100.txt`, the correct output is,
 ```
 
 ## 6) Page Rank in Spark (70 Points)
-In this problem, you will learn how to implement the PageRank algorithm in Spark. You can start experimenting with small randomly generated graphs (assume graph has no dead-ends), provided at `data/page_rank/small.txt` and `data/page_rank/full.txt`. There are 100 nodes (n = 100) in the small graph and 1000 nodes (n = 1000) in the full graph, and m = 8192 edges, 1000 of which form a directed cycle (through all the nodes) which ensures that the graph is connected. It is easy to see that the existence of such a cycle ensures that there are no dead ends in the graph. There may be multiple directed edges between a pair of nodes, and your solution should treat them as the same edge. The first column in `data/page_rank/full.txt` refers to the source node, and the second column refers to the destination node.
+In this problem, you will learn how to implement the PageRank algorithm in Spark. You can start experimenting with small randomly generated graphs (assume graph has no dead-ends), provided at `data/page_rank/small.txt` and `data/page_rank/full.txt`. There are 100 nodes (`n = 100`) in the small graph and 1000 nodes (`n = 1000`) in the full graph, and `m = 8192` edges, 1000 of which form a directed cycle (through all the nodes) which ensures that the graph is connected. It is easy to see that the existence of such a cycle ensures that there are no dead ends in the graph. There may be multiple directed edges between a pair of nodes, and your solution should treat them as the same edge. The first column in `data/page_rank/full.txt` refers to the source node, and the second column refers to the destination node.
 
-Implementation hint: You may choose to store the PageRank vector r either in memory or as an RDD. Only the matrix of links is too large to store in memory.
+Implementation hint: You may choose to store the PageRank vector `r` either in memory or as an RDD. Only the matrix of links is too large to store in memory.
 
-Let the matrix M be an (n x n) matrix such that for any i and j between [1, n], M_{ji} = 1/deg(i) if there exists a directed edge from i to j, and 0 otherwise (Here M_{ji} is the j'th row and i'th column entry of M). Here, deg(i) is the number of outgoing edges from node i in the graph. If there are multiple edges in the same direction between two nodes, treat them as a single edge.
+Let the matrix `M` be an `(n x n)` matrix such that for any `i` and `j` between `[1, n]`, `M_{ji} = 1/deg(i)` if there exists a directed edge from `i` to `j`, and 0 otherwise (Here `M_{ji}` is the `j`'th row and `i`'th column entry of `M`). Here, `deg(i)` is the number of outgoing edges from node `i` in the graph. If there are multiple edges in the same direction between two nodes, treat them as a single edge.
 
-By the definition of PageRank, assuming 1 − β to be the teleport probability, and denoting the PageRank vector by the column vector r, we have the following equation:
+By the definition of PageRank, assuming `1 − β` to be the teleport probability, and denoting the PageRank vector by the column vector `r`, we have the following equation:
 ```
 r = 1[(1 - β)/n] + β*M*r,
 ```
 
-where 1[...] is the (n × 1) vector with all entries equal to (1 - β)/n, and M*r computes the matrix-vector multiplication between the matrix of links M, and the page rank vector r.
+where `1[...]` is the `(n × 1)` vector with all entries equal to `(1 - β)/n`, and `M*r` computes the matrix-vector multiplication between the matrix of links `M`, and the page rank vector `r`.
 
 Based on this equation, the iterative procedure to compute PageRank works as follows:
 ```
@@ -182,7 +182,7 @@ Based on this equation, the iterative procedure to compute PageRank works as fol
 
 You can not store the matrix M in local memory, but you can store the vector r locally. You must figure out a way to perform the matrix-vector multiplication as an RDD operation using Spark primitives. We recommend that you also use NumPy in other parts of your code to perform vector additions, dot products, etc.
 
-Run the aforementioned iterative process in Spark for 100 iterations (assuming β = 0.8) and obtain the PageRank vector r. The matrix M can be large and should be processed as an RDD in your solution. Compute the top 5 node IDs with the highest PageRank scores.
+Run the aforementioned iterative process in Spark for 100 iterations (assuming `β = 0.8`) and obtain the PageRank vector r. The matrix M can be large and should be processed as an RDD in your solution. Compute the top 5 node IDs with the highest PageRank scores.
 
 For a sanity check, we have provided a smaller dataset (`small.txt`). In that dataset, the top node has ID 53 with value approximately 0.0357312 after 100 iterations (you can use this value to help debug). **We will be grading you on your results for full.txt.** We give you a file pageRank.py to write your code in, with basic starter code that starts your Spark context and reads in the input text file as an RDD. You will also be reporting the total time it took your program to run.
 The starter code already wraps the code you will write with timing code (report this number in seconds).
@@ -196,6 +196,12 @@ For `small.txt`, the correct output is,
 
 ```
 5 highest: [(0.0357312022326716, 53), (0.03417090697259137, 14), (0.03363008718974388, 40), (0.030005979479788617, 1), (0.029720144201405382, 27)]
+```
+
+For `full.txt`, the correct output is,
+
+```
+5 highest: [(0.002020291181518219, 263), (0.0019433415714531497, 537), (0.0019254478071662631, 965), (0.001852634016241731, 243), (0.0018273721700645144, 285)]
 ```
 
 We expect you to use Spark for all operations on the data (including performing the matrix-vector multiply). You can use NumPy or regular python for computing dot products and other arithmetic, but any other data computation should leverage Spark.
